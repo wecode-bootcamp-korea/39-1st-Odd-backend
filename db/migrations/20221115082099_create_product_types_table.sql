@@ -5,4 +5,4 @@ CREATE TABLE product_types (
 );
 
 -- migrate:down
-
+DROP TABLE product_types;

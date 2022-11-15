@@ -12,4 +12,4 @@ CREATE TABLE comments (
 );
 
 -- migrate:down
-
+DROP TABLE comments;

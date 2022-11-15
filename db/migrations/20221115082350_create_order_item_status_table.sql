@@ -7,4 +7,4 @@ CREATE TABLE order_item_status (
 );
 
 -- migrate:down
-
+DROP TABLE order_item_status;

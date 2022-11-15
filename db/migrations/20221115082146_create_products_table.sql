@@ -11,4 +11,4 @@ CREATE TABLE products (
 );
 
 -- migrate:down
-
+DROP TABLE products;
