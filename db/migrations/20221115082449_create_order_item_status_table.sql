@@ -1,5 +1,5 @@
 -- migrate:up
-CREATE TABLE order_items (
+CREATE TABLE order_item_status (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     status VARCHAR(100) NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
