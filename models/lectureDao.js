@@ -17,11 +17,11 @@ const getAllLecture = async () => {
 const getLectureByPostId = async (postId) => {
   const lecture = await database.query(
     `SELECT
-          P.id,
+          P.id AS id,
           title,
           description,
           price,
-          thumbnail_image_url,
+          thumbnail_image_url AS profileImg,
           PI.images
     FROM
           products AS P
