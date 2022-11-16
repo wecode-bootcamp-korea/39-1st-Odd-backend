@@ -6,4 +6,4 @@ CREATE TABLE user_address (
     CONSTRAINT address_user_id_fkey FOREIGN KEY (user_id) REFERENCES users(id) 
 );
 -- migrate:down
-DROP TABLE users_address;
+DROP TABLE user_address;
