@@ -12,8 +12,8 @@ const getAllLecture = async () => {
   return lectures;
 };
 
-const getLectureByPostId = async (postId) => {
-  const lecture = await lectureDao.getLectureByPostId(postId);
+const getLectureByLectureId = async (lectureId) => {
+  const lecture = await lectureDao.getLectureByLectureId(lectureId);
 
   if (!lecture) {
     const err = new Error("lecture does not exist");
@@ -33,4 +33,26 @@ const getLectureByCategoryId = async (categoryId) => {
   }
   return lectures;
 };
-module.exports = { getAllLecture, getLectureByPostId, getLectureByCategoryId };
+
+const postComment = async (user_id, product_id, content, rate) => {
+  const comment = await lectureDao.postComment(
+    user_id,
+    product_id,
+    content,
+    rate
+  );
+
+  if (!comment) {
+    const err = new Error("lecture does not exist");
+    err.statusCode = 404;
+    throw err;
+  }
+  return comment;
+};
+
+module.exports = {
+  getAllLecture,
+  getLectureByLectureId,
+  getLectureByCategoryId,
+  postComment,
+};

@@ -14,7 +14,7 @@ const getAllLecture = async () => {
   return lectures;
 };
 
-const getLectureByPostId = async (postId) => {
+const getLectureByLectureId = async (lectureId) => {
   const lecture = await database.query(
     `SELECT
           P.id AS id,
@@ -44,7 +44,7 @@ const getLectureByPostId = async (postId) => {
           P.id = PI.product_id
     WHERE id = ?
     `,
-    [postId]
+    [lectureId]
   );
   return lecture;
 };
@@ -65,4 +65,26 @@ const getLectureByCategoryId = async (categoryId) => {
   return lectures;
 };
 
-module.exports = { getAllLecture, getLectureByPostId };
+const postComment = async (user_id, product_id, content, rate) => {
+  const comment = await database.query(
+    `INSERT INTO 
+            comments(
+              user_id,
+              product_id,
+              content,
+              rate
+            )
+    VALUES (?,?,?,?)
+    `,
+    [user_id, product_id, content, rate]
+  );
+
+  return comment;
+};
+
+module.exports = {
+  getAllLecture,
+  getLectureByLectureId,
+  getLectureByCategoryId,
+  postComment,
+};
