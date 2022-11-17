@@ -3,28 +3,43 @@ const { database } = require("./dataSource");
 const getAllLecture = async () => {
   const lectures = await database.query(
     `SELECT
-           id,
-           title,
-           thumbnail_image_url as img,
-           price
+          P.id,
+          title,
+          thumbnail_image_url as img,
+          price
     FROM
-        products
+          products as P
+    LEFT JOIN
+          categories as C
+    ON 
+          P.category_id = C.id
+    LEFT JOIN
+          product_types as PT
+    ON
+          C.product_type_id = PT.id
+    WHERE
+          PT.id = 1
     `
   );
   return lectures;
 };
 
 const getLectureByLectureId = async (lectureId) => {
-  const lecture = await database.query(
+  const [lecture] = await database.query(
     `SELECT
           P.id AS id,
           title,
           description,
           price,
+          C.name AS category,
           thumbnail_image_url AS profileImg,
           PI.images
     FROM
           products AS P
+    LEFT JOIN
+          categories as C
+    ON
+          C.id = P.category_id
     LEFT JOIN
           (
       SELECT
@@ -42,7 +57,7 @@ const getLectureByLectureId = async (lectureId) => {
           ) PI 
     ON 
           P.id = PI.product_id
-    WHERE id = ?
+    WHERE P.id = ?
     `,
     [lectureId]
   );
@@ -52,13 +67,12 @@ const getLectureByLectureId = async (lectureId) => {
 const getLectureByCategoryId = async (categoryId) => {
   const lectures = await database.query(
     `SELECT
-            id,
+            P.id,
             title,
             thumbnail_image_url as img,
             price
     FROM
-            products
-    WHERE category_id =?
+            products as P
  `,
     [categoryId]
   );

@@ -5,7 +5,7 @@ const lectureController = require("../controllers/lectureController");
 const router = express.Router();
 
 router.get("/", lectureController.getAllLecture);
-router.get("/:postId", lectureController.getLectureByPostId);
+router.get("/:lectureId", lectureController.getLectureByLectureId);
 router.get("/categories/:categoryId", lectureController.getLectureByCategoryId);
 router.post("/comment", lectureController.postComment);
 

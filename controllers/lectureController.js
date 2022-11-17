@@ -3,7 +3,6 @@ const lectureService = require("../services/lectureService");
 const getAllLecture = async (req, res) => {
   try {
     const lectures = await lectureService.getAllLecture();
-    console.log(lectures);
     return res.status(201).json(lectures);
   } catch (err) {
     res.status(err.statusCode || 500).json({ message: err.message });
@@ -12,7 +11,7 @@ const getAllLecture = async (req, res) => {
 
 const getLectureByLectureId = async (req, res) => {
   try {
-    const postId = +req.params.lectureId;
+    const lectureId = +req.params.lectureId;
 
     const lectures = await lectureService.getLectureByLectureId(lectureId);
 
