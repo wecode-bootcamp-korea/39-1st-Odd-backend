@@ -4,6 +4,6 @@ const lectureController = require("../controllers/lectureController");
 
 const router = express.Router();
 
-router.get("/:lectureId", lectureController.getLectureByLectureId);
+router.get("/", lectureController.getLectureByParameter);
 
 module.exports = router;

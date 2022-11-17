@@ -1,10 +1,10 @@
 const lectureService = require("../services/lectureService");
 
-const getLectureByLectureId = async (req, res) => {
+const getLectureByParameter = async (req, res) => {
   try {
-    const lectureId = +req.params.lectureId;
+    const categoryId = +req.params.categoryId;
 
-    const lectures = await lectureService.getLectureByLectureId(lectureId);
+    const lectures = await lectureService.getLectureByParameter(categoryId);
 
     return res.status(201).json(lectures);
   } catch (err) {
@@ -14,5 +14,5 @@ const getLectureByLectureId = async (req, res) => {
 };
 
 module.exports = {
-  getLectureByLectureId,
+  getLectureByParameter,
 };
