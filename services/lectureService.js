@@ -1,16 +1,16 @@
-const lectureDao = require("../models/lectureDao");
+const productDao = require("../models/productDao");
 
-const getLectureByParameter = async (categoryId) => {
-  const lectures = await lectureDao.getLectureByParameter(categoryId);
+const getProductsByParameter = async (name, type) => {
+  const products = await productDao.getProductsByParameter(name, type);
 
-  if (!lectures) {
+  if (!products) {
     const err = new Error("lecture does not exist");
     err.statusCode = 404;
     throw err;
   }
-  return lectures;
+  return products;
 };
 
 module.exports = {
-  getLectureByParameter,
+  getProductsByParameter,
 };
