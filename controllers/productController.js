@@ -1,15 +1,11 @@
 const productService = require("../services/productService");
+const { catchAsync } = require("../utils/error");
 
-const getProductsByParameter = async (req, res) => {
-  try {
-    const products = await productService.getProductsByParameter(req.query);
+const getProductsByParameter = catchAsync(async (req, res) => {
+  const products = await productService.getProductsByParameter(req.query);
 
-    return res.status(201).json(products);
-  } catch (err) {
-    console.log(err);
-    return res.status(err.statusCode || 500).json({ message: err.message });
-  }
-};
+  return res.status(201).json(products);
+});
 
 module.exports = {
   getProductsByParameter,

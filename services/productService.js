@@ -1,18 +1,28 @@
 const productDao = require("../models/productDao");
-const { catchAsync } = require("../utils/error");
 
-const getProductsByParameter = catchAsync(async (param) => {
+const getProductsByParameter = async (param) => {
   const makeNameFilter = (name) => {
-    let nameClauses = name.map((x) => `C.name = '${x}'`);
-    return `${nameClauses.join(" OR ")}`;
+    if (typeof name == "object") {
+      let nameClauses = name.map((x) => `C.name = '${x}'`);
+      return `${nameClauses.join(" OR ")}`;
+    } else {
+      return `C.name ='${name}'`;
+    }
   };
 
   const makeTypeFilter = (type) => {
-    let nameClauses = type.map((x) => `PT.name = '${x}'`);
-    return `${nameClauses.join(" OR ")}`;
+    if (typeof type == "object") {
+      let typeClauses = type.map((x) => `PT.name = '${x}'`);
+      return `${typeClauses.join(" OR ")}`;
+    } else {
+      return `PT.name ='${type}'`;
+    }
   };
 
   const makeWhereClauseBuilder = (param) => {
+    if (Object.keys(param).length === 0) {
+      return ``;
+    }
     const builderSet = {
       name: makeNameFilter,
       type: makeTypeFilter,
@@ -35,7 +45,7 @@ const getProductsByParameter = catchAsync(async (param) => {
     throw err;
   }
   return products;
-});
+};
 
 module.exports = {
   getProductsByParameter,
