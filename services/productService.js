@@ -1,22 +1,33 @@
 const productDao = require("../models/productDao");
+const { catchAsync } = require("../utils/error");
 
-const getProductsByParameter = async (name, type) => {
-  let result = `WHERE`;
-  let count = 0;
+const getProductsByParameter = catchAsync(async (param) => {
+  const makeNameFilter = (name) => {
+    let nameClauses = name.map((x) => `C.name = '${x}'`);
+    return `${nameClauses.join(" OR ")}`;
+  };
 
-  if (name) {
-    result += ` C.name= '${name}'`;
-    count++;
-  }
-  if (type) {
-    if (count == 0) result += ` PT.name = '${type}'`;
-    else result += ` and PT.name= '${type}'`;
-  }
-  if (!name && !type) {
-    result = ``;
-  }
-  console.log(result);
-  const products = await productDao.getProductsByParameter(result);
+  const makeTypeFilter = (type) => {
+    let nameClauses = type.map((x) => `PT.name = '${x}'`);
+    return `${nameClauses.join(" OR ")}`;
+  };
+
+  const makeWhereClauseBuilder = (param) => {
+    const builderSet = {
+      name: makeNameFilter,
+      type: makeTypeFilter,
+    };
+
+    const whereClauses = Object.entries(param).map(([key, value]) => {
+      return builderSet[key](value);
+    });
+
+    return `WHERE ${whereClauses.join(" AND ")}`;
+  };
+
+  const products = await productDao.getProductsByParameter(
+    makeWhereClauseBuilder(param)
+  );
 
   if (!products) {
     const err = new Error("products does not exist");
@@ -24,7 +35,7 @@ const getProductsByParameter = async (name, type) => {
     throw err;
   }
   return products;
-};
+});
 
 module.exports = {
   getProductsByParameter,

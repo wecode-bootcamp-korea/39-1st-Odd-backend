@@ -2,10 +2,7 @@ const productService = require("../services/productService");
 
 const getProductsByParameter = async (req, res) => {
   try {
-    const name = req.query.name;
-    const type = req.query.type;
-
-    const products = await productService.getProductsByParameter(name, type);
+    const products = await productService.getProductsByParameter(req.query);
 
     return res.status(201).json(products);
   } catch (err) {
