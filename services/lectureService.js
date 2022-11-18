@@ -1,13 +1,13 @@
 const lectureDao = require("../models/lectureDao");
+const { raiseCustomError } = reqiore("../utils/error");
 
 const getLectureByLectureId = async (lectureId) => {
   const lecture = await lectureDao.getLectureByLectureId(lectureId);
 
   if (!lecture) {
-    const err = new Error("lecture does not exist");
-    err.statusCode = 404;
-    throw err;
+    raiseCustomError("lecture does not exist", 404);
   }
+
   return lecture;
 };
 
