@@ -6,7 +6,7 @@ const getLectureByLectureId = async (req, res) => {
 
     const lectures = await lectureService.getLectureByLectureId(lectureId);
 
-    return res.status(201).json(lectures);
+    return res.status(200).json(lectures);
   } catch (err) {
     console.log(err);
     return res.status(err.statusCode || 500).json({ message: err.message });
