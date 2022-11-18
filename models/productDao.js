@@ -4,9 +4,9 @@ const getProductsByParameter = async (result) => {
   const products = await database.query(
     `SELECT
           P.id,
-          title,
-          price,
-          thumbnail_image_url AS image,
+          P.title,
+          P.price,
+          P.thumbnail_image_url AS image,
           C.name AS category
     FROM 
           products AS P
