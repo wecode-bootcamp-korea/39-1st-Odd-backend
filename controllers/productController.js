@@ -5,7 +5,7 @@ const getProductsByParameter = async (req, res) => {
     const name = req.query.name;
     const type = req.query.type;
 
-    const [products] = await productService.getProductsByParameter(name, type);
+    const products = await productService.getProductsByParameter(name, type);
 
     return res.status(201).json(products);
   } catch (err) {

@@ -1,6 +1,6 @@
 const { database } = require("./dataSource");
 
-const getProductsByParameter = async (name, type) => {
+const getProductsByParameter = async (result) => {
   const products = await database.query(
     `SELECT
           P.id,
@@ -18,10 +18,8 @@ const getProductsByParameter = async (name, type) => {
           product_types AS PT
     ON
           PT.id = C.product_type_id
-    WHERE
-          C.name = ? AND PT.name = ?
-     `,
-    [name, type]
+    ${result}
+     `
   );
   return products;
 };
