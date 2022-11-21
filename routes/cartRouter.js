@@ -5,6 +5,6 @@ const { loginRequired } = require("../utils/checkUser");
 
 const router = express.Router();
 
-router.post("/:productId", loginRequired, cartController.addProduct);
+router.delete("/:productId", loginRequired, cartController.deleteProduct);
 
 module.exports = router;

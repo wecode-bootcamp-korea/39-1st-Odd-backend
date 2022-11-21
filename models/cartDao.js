@@ -1,18 +1,13 @@
 const { database } = require("./dataSource");
 const { raiseCustomError } = require("../utils/error");
 
-const addProduct = async (userId, productId, quantity) => {
+const addProduct = async (userId, productId) => {
   try {
     return await database.query(
-      `INSERT INTO
-            users(
-                product_id,
-                user.id,
-                quantity
-            )
-        VALUES(?,?,?)               
+      `DELETE FROM carts
+      WHERE product_id = ? AND user_id = ?
         `,
-      [productId, userId, quantity]
+      [productId, userId]
     );
   } catch (err) {
     raiseCustomError(INVALID_DATA_INPUT, 500);

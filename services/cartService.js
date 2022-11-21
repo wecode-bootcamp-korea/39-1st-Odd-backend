@@ -1,10 +1,7 @@
 const cartDao = require("../models/cartDao");
 
-const addProduct = async (userId, productId, quantity) => {
-  if (!quantity) {
-    quantity = 1;
-  }
-  return await cartDao.addProduct(userId, productId, quantity);
+const deleteProduct = async (userId, productId) => {
+  return await cartDao.deleteProduct(userId, productId);
 };
 
-module.exports = { addProduct };
+module.exports = { deleteProduct };
