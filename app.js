@@ -19,6 +19,12 @@ app.use(globalErrorHandler);
 const server = http.createServer(app);
 const PORT = process.env.PORT;
 
+app.get("/ping", function (req, res, next) {
+  res.json({ message: "pong" });
+});
+
+app.use(globalErrorHandler);
+
 const start = async () => {
   try {
     server.listen(PORT, () => console.log(`Server is listening on ${PORT}`));
