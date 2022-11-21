@@ -4,7 +4,7 @@ CREATE TABLE comments (
     user_id INT NOT NULL,
     product_id INT NOT NULL,
     content VARCHAR(500) NOT NULL,
-    rate decimal NOT NULL,
+    rate DECIMAL(2,1) NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     CONSTRAINT comments_user_id_fkey FOREIGN KEY (user_id) REFERENCES users(id),
