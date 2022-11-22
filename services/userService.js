@@ -2,6 +2,34 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
 const userDao = require("../models/userDao");
+const { validateEmail, validatePw } = require("../utils/validation");
+
+const signUp = async (email, password, name, phonenumber) => {
+  validateEmail(email);
+  validatePw(password);
+
+  const user = await userDao.getUserByEmail(email);
+
+  if (user) {
+    const err = new Error("duplicated email");
+    err.statusCode = 400;
+    throw err;
+  }
+
+  const hashedPassword = await bcrypt.hash(
+    password,
+    parseInt(process.env.saltRounds)
+  );
+
+  const createUser = await userDao.createUser(
+    email,
+    hashedPassword,
+    name,
+    phonenumber
+  );
+
+  return createUser;
+};
 
 const signIn = async (email, password) => {
   const user = await userDao.getUserByEmail(email);
@@ -23,6 +51,12 @@ const signIn = async (email, password) => {
   return jwt.sign({ id: user.id }, process.env.secretKey, { expiresIn: "1d" });
 };
 
+const getUserById = async (id) => {
+  return await userDao.getUserById(id);
+};
+
 module.exports = {
+  signUp,
   signIn,
+  getUserById,
 };
