@@ -1,7 +1,7 @@
 const { database } = require("./dataSource");
 const { raiseCustomError } = require("../utils/error");
 
-const addProduct = async (userId, productId) => {
+const deleteProduct = async (userId, productId) => {
   try {
     return await database.query(
       `DELETE FROM carts
@@ -14,4 +14,4 @@ const addProduct = async (userId, productId) => {
   }
 };
 
-module.exports = { addProduct };
+module.exports = { deleteProduct };
