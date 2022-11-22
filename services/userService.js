@@ -55,8 +55,23 @@ const getUserById = async (id) => {
   return await userDao.getUserById(id);
 };
 
+const getUserByEmail = async (email) => {
+  const [user] = await database.query(
+    `
+      SELECT *
+      FROM 
+        users u
+      WHERE
+        u.email = ?`,
+    [email]
+  );
+
+  return user;
+};
+
 module.exports = {
   signUp,
   signIn,
   getUserById,
+  getUserByEmail,
 };
