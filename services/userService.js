@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt");
 
 const userDao = require("../models/userDao");
 const { validateEmail, validatePw } = require("../utils/validation");
+const { raiseCustomError } = require("../utils/error");
 
 const signUp = async (email, password, name, phonenumber) => {
   validateEmail(email);
@@ -11,9 +12,7 @@ const signUp = async (email, password, name, phonenumber) => {
   const user = await userDao.getUserByEmail(email);
 
   if (user) {
-    const err = new Error("duplicated email");
-    err.statusCode = 400;
-    throw err;
+    raiseCustomError("duplicated email", 400);
   }
 
   const hashedPassword = await bcrypt.hash(
@@ -35,17 +34,13 @@ const signIn = async (email, password) => {
   const user = await userDao.getUserByEmail(email);
 
   if (!user) {
-    const err = new Error("user does not exist");
-    err.statusCode = 404;
-    throw err;
+    raiseCustomError("user does not exist", 400);
   }
 
   const result = await bcrypt.compare(password, user.password);
 
   if (!result) {
-    const err = new Error("invalid password");
-    err.statusCode = 401;
-    throw err;
+    raiseCustomError("invalid password", 401);
   }
 
   return jwt.sign({ id: user.id }, process.env.secretKey, { expiresIn: "1d" });
@@ -55,23 +50,8 @@ const getUserById = async (id) => {
   return await userDao.getUserById(id);
 };
 
-const getUserByEmail = async (email) => {
-  const [user] = await database.query(
-    `
-      SELECT *
-      FROM 
-        users u
-      WHERE
-        u.email = ?`,
-    [email]
-  );
-
-  return user;
-};
-
 module.exports = {
   signUp,
   signIn,
   getUserById,
-  getUserByEmail,
 };
