@@ -3,11 +3,8 @@ const express = require("express");
 const router = express.Router();
 
 const userRouter = require("./userRouter");
-<<<<<<< HEAD
-const cartRouter = require("./cartRouter");
-=======
 const lectureRouter = require("./lectureRouter");
->>>>>>> main
+const cartRouter = require("./cartRouter");
 
 router.use("/cart", cartRouter);
 router.use("/users", userRouter);
