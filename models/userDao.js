@@ -21,14 +21,13 @@ const createUser = async (email, hashedPassword, name, phonenumber) => {
 };
 
 const getUserById = async (id) => {
-  const result = await dataSource.query(
+  const result = await database.query(
     `
 		SELECT 
 			id,
 			name,
 			email,
-			password,
-			profile_image AS profileImage
+			password
 		FROM users
 		WHERE id=?`,
     [id]
