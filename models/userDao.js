@@ -37,8 +37,11 @@ const getUserByEmail = async (email) => {
 
 const getUserById = async (id) => {
   const result = await database.query(
-    `
-		SELECT *
+    `SELECT
+      id,
+      name,
+      email,
+      password
 		FROM
       users
 		WHERE
