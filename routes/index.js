@@ -3,6 +3,8 @@ const express = require("express");
 const cartRouter = require("./cartRouter");
 const router = express.Router();
 
-router.use("/carts", cartRouter);
+const userRouter = require("./userRouter");
+
+router.use("/users", userRouter);
 
 module.exports = router;
