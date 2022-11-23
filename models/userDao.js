@@ -21,7 +21,7 @@ const createUser = async (email, hashedPassword, name, phonenumber) => {
 };
 
 const getUserById = async (id) => {
-  const result = await dataSource.query(
+  const result = await database.query(
     `
 		SELECT 
 			id,
