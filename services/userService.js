@@ -1,16 +1,10 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-<<<<<<< HEAD
-const userDao = require("../models/userDao");
-const { validateEmail, validatePw } = require("../utils/validation");
-
-=======
 
 const userDao = require("../models/userDao");
 const { validateEmail, validatePw } = require("../utils/validation");
 const { raiseCustomError } = require("../utils/error");
 
->>>>>>> main
 const signUp = async (email, password, name, phonenumber) => {
   validateEmail(email);
   validatePw(password);
