@@ -1,5 +1,5 @@
 const lectureDao = require("../models/lectureDao");
-const { raiseCustomError } = reqiore("../utils/error");
+const { raiseCustomError } = require("../utils/error");
 
 const getLectureByLectureId = async (lectureId) => {
   const lecture = await lectureDao.getLectureByLectureId(lectureId);
