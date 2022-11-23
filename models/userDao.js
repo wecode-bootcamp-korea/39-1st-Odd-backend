@@ -27,8 +27,7 @@ const getUserById = async (id) => {
 			id,
 			name,
 			email,
-			password,
-			profile_image AS profileImage
+			password
 		FROM users
 		WHERE id=?`,
     [id]
