@@ -4,6 +4,10 @@ const { loginRequired } = require("../utils/checkUser");
 
 const router = express.Router();
 
-router.post("/:productid", loginRequired, commentController.createComment);
+router.post(
+  "productId/:productid",
+  loginRequired,
+  commentController.createComment
+);
 
 module.exports = router;
