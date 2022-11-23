@@ -12,4 +12,10 @@ const globalErrorHandler = (err, req, res, next) => {
   res.status(err.statusCode).json({ message: err.message });
 };
 
-module.exports = { catchAsync, globalErrorHandler };
+const raiseCustomError = (message, statusCode) => {
+  const err = new Error(message);
+  err.statusCode = statusCode;
+  throw err;
+};
+
+module.exports = { catchAsync, globalErrorHandler, raiseCustomError };
