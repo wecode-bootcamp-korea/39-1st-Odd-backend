@@ -5,9 +5,9 @@ const addProduct = async (userId, productId, quantity) => {
   try {
     return await database.query(
       `INSERT INTO
-            users(
+            carts(
                 product_id,
-                user.id,
+                user_id,
                 quantity
             )
         VALUES(?,?,?)               
@@ -15,7 +15,7 @@ const addProduct = async (userId, productId, quantity) => {
       [productId, userId, quantity]
     );
   } catch (err) {
-    raiseCustomError(INVALID_DATA_INPUT, 500);
+    raiseCustomError("INVALID_DATA_INPUT", 500);
   }
 };
 
