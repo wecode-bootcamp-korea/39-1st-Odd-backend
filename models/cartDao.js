@@ -1,7 +1,7 @@
 const { database } = require("./dataSource");
 const { raiseCustomError } = require("../utils/error");
 
-const modifyQuantity = async (quantity, userId, productId) => {
+const modifyQuantity = async (userId, productId, quantity) => {
   try {
     return await database.query(
       `UPDATE
