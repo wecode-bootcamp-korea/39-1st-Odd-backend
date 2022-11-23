@@ -1,18 +1,17 @@
 const { database } = require("./dataSource");
 
-const createUser = async (name, email, password, phoneNumber) => {
+const createUser = async (email, hashedPassword, name, phonenumber) => {
   try {
     return await database.query(
-      `
-      INSERT INTO
-        users(
-          name,
-          email,
-          password,
-          phone_number
-        )
-      VALUES (?, ?, ?, ?);`,
-      [name, email, password, phoneNumber]
+      `INSERT INTO users(
+                email, 
+                password, 
+                name, 
+                phone_number
+                ) 
+            VALUES (?, ?, ?, ?);
+            `,
+      [email, hashedPassword, name, phonenumber]
     );
   } catch (err) {
     const error = new Error("INVALID_DATA_INPUT");
@@ -21,28 +20,17 @@ const createUser = async (name, email, password, phoneNumber) => {
   }
 };
 
-const getUserByEmail = async (email) => {
-  const [user] = await database.query(
-    `
-      SELECT *
-      FROM 
-        users u
-      WHERE
-        u.email = ?`,
-    [email]
-  );
-
-  return user;
-};
-
 const getUserById = async (id) => {
-  const result = await database.query(
+  const result = await dataSource.query(
     `
-		SELECT *
-		FROM
-      users
-		WHERE
-      id=?`,
+		SELECT 
+			id,
+			name,
+			email,
+			password,
+			profile_image AS profileImage
+		FROM users
+		WHERE id=?`,
     [id]
   );
 
@@ -68,4 +56,24 @@ const signIn = async (email) => {
     throw error;
   }
 };
-module.exports = { getUserById, createUser, getUserByEmail, signIn };
+
+const getUserByEmail = async (email) => {
+  const [user] = await database.query(
+    `
+      SELECT *
+      FROM 
+        users u
+      WHERE
+        u.email = ?`,
+    [email]
+  );
+
+  return user;
+};
+
+module.exports = {
+  createUser,
+  getUserById,
+  signIn,
+  getUserByEmail,
+};
