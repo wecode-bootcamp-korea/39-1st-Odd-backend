@@ -1,7 +1,6 @@
 const jwt = require("jsonwebtoken");
 const { promisify } = require("util");
 const { getUserById } = require("../services/userService");
-const { raiseCustomError } = require("./error");
 
 const loginRequired = async (req, res, next) => {
   const accessToken = req.headers.authorization;
