@@ -7,6 +7,7 @@ const morgan = require("morgan");
 
 const routes = require("./routes");
 const { globalErrorHandler } = require("./utils/error");
+
 const app = express();
 
 app.use(cors());
@@ -21,6 +22,8 @@ const PORT = process.env.PORT;
 app.get("/ping", function (req, res, next) {
   res.json({ message: "pong" });
 });
+
+app.use(globalErrorHandler);
 
 const start = async () => {
   try {

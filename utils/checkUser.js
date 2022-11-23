@@ -1,14 +1,13 @@
 const jwt = require("jsonwebtoken");
 const { promisify } = require("util");
 const { getUserById } = require("../services/userService");
+const { raiseCustomError } = require("./error");
 
 const loginRequired = async (req, res, next) => {
   const accessToken = req.headers.authorization;
 
   if (!accessToken) {
-    const error = new Error("NEED_ACCESS_TOKEN");
-    error.statusCode = 401;
-    return res.status(error.statusCode).json({ message: error.message });
+    raiseCustomError("NEED_ACCESS_TOKEN", 401);
   }
 
   const decoded = await promisify(jwt.verify)(
@@ -19,10 +18,7 @@ const loginRequired = async (req, res, next) => {
   const user = await getUserById(decoded.id);
 
   if (!user) {
-    const error = new Error("USER_DOES_NOT_EXIST");
-    error.statusCode = 404;
-
-    return res.status(error.statusCode).json({ message: error.message });
+    raiseCustomError("USER_DOES_NOT_EXIST", 404);
   }
 
   req.user = user;
