@@ -1,7 +1,7 @@
 const { database } = require("./dataSource");
 const { raiseCustomError } = require("../utils/error");
 
-const addCart = async (userId, productId, quantity) => {
+const addCart = async (userId, productId, quantity = 1) => {
   try {
     return await database.query(
       `INSERT INTO
@@ -19,7 +19,7 @@ const addCart = async (userId, productId, quantity) => {
   }
 };
 
-const getCartByUserId = async (userId) => {
+const getCartsByUserId = async (userId) => {
   try {
     return await database.query(
       `SELECT
@@ -54,4 +54,4 @@ const getCartByUserId = async (userId) => {
   }
 };
 
-module.exports = { addCart, getCartByUserId };
+module.exports = { addCart, getCartsByUserId };

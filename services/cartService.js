@@ -1,9 +1,10 @@
 const cartDao = require("../models/cartDao");
+const { raiseCustomError } = require("../utils/error");
 
-const addCart = async (userId, productId, quantity) => {
-  const cartProduct = await cartDao.getCartByUserId(userId);
-  for (let i = 0; i < cartProduct.length; i++) {
-    if (cartProduct[i].productId == productId) {
+const addCart = async (userId, productId, quantity = 1) => {
+  const cartProducts = await cartDao.getCartsByUserId(userId);
+  for (let i = 0; i < cartProducts.length; i++) {
+    if (cartProducts[i].productId == productId) {
       raiseCustomError("Already added", 409);
     }
   }
