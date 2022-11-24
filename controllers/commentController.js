@@ -3,7 +3,7 @@ const { catchAsync } = require("../utils/error");
 
 const createComment = catchAsync(async (req, res) => {
   const userId = req.user.id;
-  const productId = req.params.productId;
+  const productId = req.params.productid;
   const { content, rate } = req.body;
 
   if (!userId || !content || !rate || !productId) {
@@ -16,4 +16,12 @@ const createComment = catchAsync(async (req, res) => {
   });
 });
 
-module.exports = { createComment };
+const getCommentsByProductId = catchAsync(async (req, res) => {
+  const { productId } = req.params;
+
+  const comments = await commentService.getCommentsByProductId(productId);
+
+  return res.status(200).json({ data: comments });
+});
+
+module.exports = { createComment, getCommentsByProductId };

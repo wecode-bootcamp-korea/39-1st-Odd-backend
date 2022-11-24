@@ -5,9 +5,11 @@ const { loginRequired } = require("../utils/checkUser");
 const router = express.Router();
 
 router.post(
-  "productId/:productid",
+  "/productId/:productid",
   loginRequired,
   commentController.createComment
 );
+
+router.get("/product/:productId", commentController.getCommentsByProductId);
 
 module.exports = router;
