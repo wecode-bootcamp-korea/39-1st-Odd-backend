@@ -4,11 +4,9 @@ const router = express.Router();
 
 const userRouter = require("./userRouter");
 const lectureRouter = require("./lectureRouter");
-const lectureRouter = require("./lectureRouter");
 const cartRouter = require("./cartRouter");
 
 router.use("/users", userRouter);
-router.use("/lecture", lectureRouter);
 router.use("/lecture", lectureRouter);
 router.use("/cart", cartRouter);
 
