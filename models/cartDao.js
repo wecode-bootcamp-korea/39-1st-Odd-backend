@@ -1,7 +1,7 @@
 const { database } = require("./dataSource");
 const { raiseCustomError } = require("../utils/error");
 
-const getCartByUserId = async (userId) => {
+const getCartsByUserId = async (userId) => {
   try {
     return await database.query(
       `SELECT
@@ -43,4 +43,4 @@ const getCartByUserId = async (userId) => {
   }
 };
 
-module.exports = { getCartByUserId };
+module.exports = { getCartsByUserId };
