@@ -15,7 +15,7 @@ const addCart = async (userId, productId, quantity = 1) => {
       [userId]
     );
   } catch (err) {
-    raiseCustomError(INVALID_DATA_INPUT, 500);
+    raiseCustomError("INVALID_DATA_INPUT", 500);
   }
 };
 
@@ -77,4 +77,19 @@ const modifyQuantity = async (userId, productId, quantity) => {
   }
 };
 
-module.exports = { addCart, getCartsByUserId, modifyQuantity };
+const deleteProduct = async (userId, productId) => {
+  try {
+    return await database.query(
+      `DELETE FROM 
+        carts
+      WHERE
+        product_id = ? AND user_id = ?
+        `,
+      [productId, userId]
+    );
+  } catch (err) {
+    raiseCustomError("INVALID_DATA_INPUT", 500);
+  }
+};
+
+module.exports = { addCart, getCartsByUserId, modifyQuantity, deleteProduct };

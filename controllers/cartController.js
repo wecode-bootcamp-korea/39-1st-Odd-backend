@@ -12,7 +12,7 @@ const addCart = catchAsync(async (req, res) => {
 
   await cartService.addCart(userId, productId, quantity);
 
-  return res.status(201).json({ message: "productAdded" });
+  return res.status(201).json({ message: "productDeleted" });
 });
 
 const getCartsByUserId = catchAsync(async (req, res) => {
@@ -37,4 +37,17 @@ const modifyQuantity = catchAsync(async (req, res) => {
   return res.status(201).json({ message: "quantityModified" });
 });
 
-module.exports = { addCart, getCartsByUserId, modifyQuantity };
+const deleteProduct = catchAsync(async (req, res) => {
+  const userId = req.user.id;
+  const productId = req.params.productId;
+
+  if (!productId) {
+    raiseCustomError(KEY_ERROR, 400);
+  }
+
+  await cartService.deleteProduct(userId, productId);
+
+  return res.status(201).json({ message: "productDeleted" });
+});
+
+module.exports = { addCart, getCartsByUserId, modifyQuantity, deleteProduct };

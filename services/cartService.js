@@ -24,4 +24,8 @@ const modifyQuantity = async (userId, productId, quantity) => {
   return await cartDao.modifyQuantity(userId, productId, quantity);
 };
 
-module.exports = { addCart, getCartsByUserId, modifyQuantity };
+const deleteProduct = async (userId, productId) => {
+  return await cartDao.deleteProduct(userId, productId);
+};
+
+module.exports = { addCart, getCartsByUserId, modifyQuantity, deleteProduct };
