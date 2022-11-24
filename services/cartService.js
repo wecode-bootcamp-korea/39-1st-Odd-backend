@@ -16,4 +16,12 @@ const getCartsByUserId = async (userId) => {
   return await cartDao.getCartsByUserId(userId);
 };
 
-module.exports = { addCart, getCartsByUserId };
+const modifyQuantity = async (userId, productId, quantity) => {
+  if (quantity > 7) {
+    raiseCustomError("too Many products", 409);
+  }
+
+  return await cartDao.modifyQuantity(userId, productId, quantity);
+};
+
+module.exports = { addCart, getCartsByUserId, modifyQuantity };

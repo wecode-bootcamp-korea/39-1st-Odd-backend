@@ -23,4 +23,18 @@ const getCartsByUserId = catchAsync(async (req, res) => {
   return res.status(200).json(carts);
 });
 
-module.exports = { addCart, getCartsByUserId };
+const modifyQuantity = catchAsync(async (req, res) => {
+  const userId = req.user.id;
+  const productId = req.params.productId;
+  const { quantity } = req.body;
+
+  if (!productId) {
+    raiseCustomError(KEY_ERROR, 400);
+  }
+
+  await cartService.modifyQuantity(userId, productId, quantity);
+
+  return res.status(201).json({ message: "quantityModified" });
+});
+
+module.exports = { addCart, getCartsByUserId, modifyQuantity };
