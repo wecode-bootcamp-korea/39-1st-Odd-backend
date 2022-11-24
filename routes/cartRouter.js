@@ -5,6 +5,6 @@ const { loginRequired } = require("../utils/checkUser");
 
 const router = express.Router();
 
-router.get("/", loginRequired, cartController.getCartByUserId);
+router.get("", loginRequired, cartController.getCartByUserId);
 
 module.exports = router;
