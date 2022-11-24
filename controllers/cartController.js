@@ -2,11 +2,10 @@ const cartService = require("../services/cartService");
 const { catchAsync, raiseCustomError } = require("../utils/error");
 
 const deleteProduct = catchAsync(async (req, res) => {
-  const user = req.user;
-  const userId = user.id;
+  const userId = req.user.id;
   const productId = req.params.productId;
 
-  if (!user || !productId) {
+  if (!productId) {
     raiseCustomError(KEY_ERROR, 400);
   }
 
