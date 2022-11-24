@@ -61,6 +61,22 @@ const getCartsByUserId = async (userId) => {
   }
 };
 
+const modifyQuantity = async (userId, productId, quantity) => {
+  try {
+    return await database.query(
+      `UPDATE
+          carts
+        SET
+          quantity =?
+        WHERE user_id =? AND product_id = ?
+          `,
+      [quantity, userId, productId]
+    );
+  } catch (err) {
+    raiseCustomError("INVALID_DATA_INPUT", 500);
+  }
+};
+
 const deleteProduct = async (userId, productId) => {
   try {
     return await database.query(
@@ -76,4 +92,4 @@ const deleteProduct = async (userId, productId) => {
   }
 };
 
-module.exports = { addCart, getCartsByUserId, deleteProduct };
+module.exports = { addCart, getCartsByUserId, modifyQuantity, deleteProduct };

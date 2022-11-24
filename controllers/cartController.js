@@ -23,6 +23,20 @@ const getCartsByUserId = catchAsync(async (req, res) => {
   return res.status(200).json(carts);
 });
 
+const modifyQuantity = catchAsync(async (req, res) => {
+  const userId = req.user.id;
+  const productId = req.params.productId;
+  const { quantity } = req.body;
+
+  if (!productId) {
+    raiseCustomError(KEY_ERROR, 400);
+  }
+
+  await cartService.modifyQuantity(userId, productId, quantity);
+
+  return res.status(201).json({ message: "quantityModified" });
+});
+
 const deleteProduct = catchAsync(async (req, res) => {
   const userId = req.user.id;
   const productId = req.params.productId;
@@ -36,4 +50,4 @@ const deleteProduct = catchAsync(async (req, res) => {
   return res.status(201).json({ message: "productDeleted" });
 });
 
-module.exports = { addCart, getCartsByUserId, deleteProduct };
+module.exports = { addCart, getCartsByUserId, modifyQuantity, deleteProduct };
