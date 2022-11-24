@@ -6,7 +6,7 @@ const addCart = catchAsync(async (req, res) => {
   const productId = req.params.productId;
   let { quantity } = req.body;
 
-  if (!userId || !productId) {
+  if (!productId) {
     raiseCustomError(KEY_ERROR, 400);
   }
 
