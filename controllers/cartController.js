@@ -15,4 +15,12 @@ const addCart = catchAsync(async (req, res) => {
   return res.status(201).json({ message: "productAdded" });
 });
 
-module.exports = { addCart };
+const getCartsByUserId = catchAsync(async (req, res) => {
+  const userId = req.user.id;
+
+  const carts = await cartService.getCartsByUserId(userId);
+
+  return res.status(200).json(carts);
+});
+
+module.exports = { addCart, getCartsByUserId };
