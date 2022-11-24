@@ -10,6 +10,10 @@ const addCart = catchAsync(async (req, res) => {
     raiseCustomError(KEY_ERROR, 400);
   }
 
+  if (!quantity) {
+    quantity = 1;
+  }
+
   await cartService.addCart(userId, productId, quantity);
 
   return res.status(201).json({ message: "productAdded" });
