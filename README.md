@@ -14,7 +14,7 @@ BackEnd : 김세호, 김한솔
 
 ## 👉 서비스 소개
 
-<font-weight="bold">요리 강의, 조리 도구 판매 사이트<br>
+요리 강의, 조리 도구 판매 사이트<br>
 
 - 직관적인 UI 구성 페이지<br>
 - 메인화면 부터 동적인 웹페이지<br>
@@ -52,6 +52,8 @@ GET 127.0.0.1:3002/products?type=단과강의&name=한식&name=멕시코
 - GET
   Get Detail product By product Id 127.0.0.1:3002/lecture/11
   Get Cart List By User Id 127.0.0.1:3002/cart
+
+https://documenter.getpostman.com/view/24101014/2s8YmRNLm9
 
 ## ✏️ 구현기능
 
