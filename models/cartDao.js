@@ -6,9 +6,9 @@ const addCart = async (userId, productId, quantity = 1) => {
     return await database.query(
       `INSERT INTO
             carts(
-                product_id,
-                user_id,
-                quantity
+              product_id,
+              user_id,
+              quantity
             )
         VALUES(?,?,?)               
         `,
@@ -83,9 +83,9 @@ const deleteProduct = async (userId, productId) => {
       `DELETE FROM 
         carts
       WHERE
-        product_id = ? AND user_id = ?
+        user_id = ? AND product_id = ?
         `,
-      [productId, userId]
+      [userId, productId]
     );
   } catch (err) {
     raiseCustomError("INVALID_DATA_INPUT", 500);

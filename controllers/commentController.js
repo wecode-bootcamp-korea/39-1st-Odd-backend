@@ -6,8 +6,8 @@ const createComment = catchAsync(async (req, res) => {
   const productId = req.params.productid;
   const { content, rate } = req.body;
 
-  if (!userId || !content || !rate || !productId) {
-    return res.status(400).json({ message: "KEY_ERROR" });
+  if (!userId || !content || !rate || productId !== Number) {
+    raiseCustomError("KEY_ERROR", 400);
   }
 
   await commentService.createComment(userId, content, rate, productId);
@@ -18,6 +18,10 @@ const createComment = catchAsync(async (req, res) => {
 
 const getCommentsByProductId = catchAsync(async (req, res) => {
   const { productId } = req.params;
+
+  if (productId !== Number) {
+    raiseCustomError("KEY_ERROR", 400);
+  }
 
   const comments = await commentService.getCommentsByProductId(productId);
 

@@ -1,57 +1,42 @@
-const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 const userDao = require("../models/userDao");
 const { validateEmail, validatePw } = require("../utils/validation");
-const { raiseCustomError } = require("../utils/error");
+const { raiseCustomError } = require("../utils/error"); 
 
-const signUp = async (email, password, name, phonenumber) => {
+
+const signUp = async (name, phone, email, password) => {
   validateEmail(email);
   validatePw(password);
 
   const user = await userDao.getUserByEmail(email);
-
   if (user) {
-    raiseCustomError("duplicated email", 400);
+    raiseCustomError("DUPLICATED_EMAIL", 400);
   }
 
-  const hashedPassword = await bcrypt.hash(
-    password,
-    parseInt(process.env.saltRounds)
-  );
-
-  const createUser = await userDao.createUser(
-    email,
-    hashedPassword,
-    name,
-    phonenumber
-  );
-
-  return createUser;
+  const hashedPassword = await bcrypt.hash(password, 10);
+  return await userDao.createUser(name, phone, email, hashedPassword);
 };
 
-const signIn = async (email, password) => {
+const signin = async (email, password) => {
+  validateEmail(email);
   const user = await userDao.getUserByEmail(email);
-
-  if (!user) {
-    raiseCustomError("user does not exist", 400);
+  const is_match = await bcrypt.compare(password, user.password);
+  if (!is_match) {
+    raiseCustomError("INVALID_USER", 401);
   }
 
-  const result = await bcrypt.compare(password, user.password);
+  const jwtToken = jwt.sign({ id: user.id }, process.env.JWT_SECRET_KEY, {
+    expiresIn: "1d",
+  });
 
-  if (!result) {
-    raiseCustomError("invalid password", 401);
-  }
-
-  return jwt.sign({ id: user.id }, process.env.secretKey, { expiresIn: "1d" });
+  return jwtToken;
 };
 
 const getUserById = async (id) => {
-  return await userDao.getUserById(id);
-};
+  const user = await userDao.getUserById(id)
+  return user
+}
 
-module.exports = {
-  signUp,
-  signIn,
-  getUserById,
-};
+module.exports = { signUp, signin, getUserById };

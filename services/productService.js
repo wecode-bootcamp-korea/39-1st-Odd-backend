@@ -40,9 +40,7 @@ const getProductsByParameter = async (param) => {
   );
 
   if (!products) {
-    const err = new Error("products does not exist");
-    err.statusCode = 404;
-    throw err;
+    raiseCustomError("PRODUCTS_DOES_NOT_EXIST", 401);
   }
   return products;
 };
